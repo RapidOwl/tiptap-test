@@ -1,7 +1,11 @@
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, useEditorState } from "@tiptap/react";
 import { FloatingMenu, BubbleMenu } from "@tiptap/react/menus";
-import StarterKit from "@tiptap/starter-kit";
+
 import { Node } from "@tiptap/core";
+
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
 
 const Horse = Node.create({
   name: "horse",
@@ -21,7 +25,7 @@ const Horse = Node.create({
 
 const Tiptap = () => {
   const editor = useEditor({
-    extensions: [StarterKit, Horse],
+    extensions: [Document, Paragraph, Text, Horse],
     content: "<p>Hello World!</p>",
     editorProps: {
       attributes: {
@@ -30,12 +34,19 @@ const Tiptap = () => {
     },
   });
 
+  const json = useEditorState({
+    editor,
+    selector: (ctx) => ctx.editor?.getJSON(),
+  });
+
   return (
     <>
       <div className="tiptap-toolbar">
         <button
           type="button"
-          onClick={() => editor?.chain().focus("end").insertContent({ type: "horse" }).run()}
+          onClick={() =>
+            editor?.chain().focus().insertContent({ type: "horse" }).run()
+          }
           disabled={!editor}
         >
           horse
@@ -44,6 +55,7 @@ const Tiptap = () => {
       <EditorContent editor={editor} />
       <FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>
       <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>
+      <pre>{JSON.stringify(json, null, 2)}</pre>
     </>
   );
 };
