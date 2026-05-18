@@ -54,7 +54,9 @@ const Tiptap = () => {
       </div>
       <EditorContent editor={editor} />
       <FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>
-      <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>
+      <BubbleMenu editor={editor}>
+        This is the bubble menu (that we could perhaps use for parameters)
+      </BubbleMenu>
       <pre>{JSON.stringify(json, null, 2)}</pre>
     </>
   );

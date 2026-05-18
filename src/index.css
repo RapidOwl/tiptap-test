@@ -115,6 +115,11 @@ body {
   font-size: 0.9em;
 }
 
+.horse-atom.ProseMirror-selectednode {
+  outline: 2px solid var(--accent-border);
+  outline-offset: 2px;
+}
+
 h1,
 h2 {
   font-family: var(--heading);
